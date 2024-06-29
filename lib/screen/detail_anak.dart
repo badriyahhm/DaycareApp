@@ -5,35 +5,35 @@ import 'package:daycare/screen/dailyreport.dart';
 class DetailAnakScreen extends StatelessWidget {
   final DataAnak dataAnak;
 
-  DetailAnakScreen({required this.dataAnak});
+  const DetailAnakScreen({required this.dataAnak, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Detail Anak',
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
-        backgroundColor: Color(0XFF909FF9),
+        backgroundColor: const Color(0XFF909FF9),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
+            const Center(
               child: CircleAvatar(
                 radius: 50,
                 backgroundImage: AssetImage('images/face.png'),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _buildDetailItem('Nama', dataAnak.namaAnak),
             _buildDetailItem('Jenis Kelamin', dataAnak.gender),
             _buildDetailItem('Nama Orang Tua', dataAnak.parentName),
             _buildDetailItem('Kontak Orang Tua', dataAnak.parentContact),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _buildButton(context),
           ],
         ),
@@ -43,19 +43,18 @@ class DetailAnakScreen extends StatelessWidget {
 
   Widget _buildDetailItem(String label, String value) {
     return Container(
-      margin: const EdgeInsets.symmetric(
-          horizontal: 15), // Memindahkan margin ke sini
+      margin: const EdgeInsets.symmetric(horizontal: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             '$label:',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 5),
           Text(
             value,
-            style: TextStyle(fontSize: 18),
+            style: const TextStyle(fontSize: 18),
           ),
           const SizedBox(height: 10),
         ],
@@ -67,8 +66,7 @@ class DetailAnakScreen extends StatelessWidget {
     return Center(
       child: ElevatedButton(
         onPressed: () {
-          print(
-              "Button Pressed!"); // Menambahkan print statement untuk debugging
+          print("Button Pressed!");
           Navigator.push(
             context,
             MaterialPageRoute(

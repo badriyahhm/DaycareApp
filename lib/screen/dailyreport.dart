@@ -6,7 +6,7 @@ import 'package:daycare/models/dataanak.dart';
 class DailyReportScreen extends StatefulWidget {
   final DataAnak dataAnak;
 
-  DailyReportScreen({required this.dataAnak});
+  const DailyReportScreen({required this.dataAnak, super.key});
 
   @override
   _DailyReportScreenState createState() => _DailyReportScreenState();
@@ -31,11 +31,12 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
     );
-    if (picked != null && picked != selectedDate)
+    if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
         dateController.text = DateFormat('yyyy-MM-dd').format(selectedDate!);
       });
+    }
   }
 
   Future<void> _selectTime(
@@ -44,11 +45,12 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
       context: context,
       initialTime: TimeOfDay.now(),
     );
-    if (picked != null && picked != selectedTime)
+    if (picked != null && picked != selectedTime) {
       setState(() {
         selectedTime = picked;
         controller.text = picked.format(context);
       });
+    }
   }
 
   void logout(BuildContext context) {
@@ -62,14 +64,14 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Daily Report',
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
-        backgroundColor: Color(0XFF909FF9),
+        backgroundColor: const Color(0XFF909FF9),
         actions: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.logout,
               color: Colors.white,
             ),
@@ -91,38 +93,38 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
             buildTimePicker('Arrival', arrivalController, context),
             buildTextField('Body Temperature', bodyTemperatureController),
             buildTextField('Conditions', conditionsController),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             buildSectionTitle('Meals', Icons.restaurant),
             buildMealsSection(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             buildSectionTitle('Toilet', Icons.clean_hands),
             buildToiletSection(),
             buildSectionTitle('Rest', Icons.bedtime),
             buildRestSection(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             buildSectionTitle('Bottle', Icons.local_cafe),
             buildBottleSection(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             buildSectionTitle('Other', Icons.toys),
             buildOtherSection(),
-            SizedBox(height: 20),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
+            const SizedBox(height: 20),
             buildSectionTitle('Notes for My Parents', Icons.inventory),
             buildNotesForParentsSection(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 10),
+              margin: const EdgeInsets.symmetric(horizontal: 10),
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                         content: Text('Daily report submitted successfully')),
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0XFFFC7275)),
-                child: Text(
+                    backgroundColor: const Color(0XFFFC7275)),
+                child: const Text(
                   'Submit',
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
@@ -136,11 +138,11 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
 
   Widget buildTextField(String label, TextEditingController controller) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 7),
-      padding: EdgeInsets.symmetric(horizontal: 15),
+      margin: const EdgeInsets.symmetric(vertical: 7),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: Color(0XFFFFE2DF),
+        color: const Color(0XFFFFE2DF),
       ),
       child: TextField(
         controller: controller,
@@ -152,10 +154,10 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
   Widget buildDatePicker(
       String label, TextEditingController controller, BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 7),
-      padding: EdgeInsets.symmetric(horizontal: 15),
+      margin: const EdgeInsets.symmetric(vertical: 7),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
-        color: Color(0XFFFFE2DF),
+        color: const Color(0XFFFFE2DF),
         borderRadius: BorderRadius.circular(15),
       ),
       child: GestureDetector(
@@ -174,10 +176,10 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
   Widget buildTimePicker(
       String label, TextEditingController controller, BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 7),
-      padding: EdgeInsets.symmetric(horizontal: 15),
+      margin: const EdgeInsets.symmetric(vertical: 7),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
-        color: Color(0XFFFFE2DF),
+        color: const Color(0XFFFFE2DF),
         borderRadius: BorderRadius.circular(15),
       ),
       child: GestureDetector(
@@ -196,20 +198,20 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
   Widget buildSectionTitle(String title, IconData icon) {
     return Row(
       children: [
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         Icon(
           icon,
-          color: Color(0XFF4938C0),
+          color: const Color(0XFF4938C0),
           size: 25,
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
               color: Color(0XFF4938C0)),
@@ -236,15 +238,15 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
   Widget buildMealItem(String label) {
     return Container(
       decoration: BoxDecoration(
-        color: Color(0XFFFFE2DF),
+        color: const Color(0XFFFFE2DF),
         borderRadius: BorderRadius.circular(10),
       ),
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
         children: [
           Expanded(
               flex: 2, child: buildTextField(label, TextEditingController())),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Expanded(
               flex: 1,
               child: buildDropdown('Quantity', ['None', 'Some', 'Lots'])),
@@ -255,11 +257,11 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
 
   Widget buildDropdown(String label, List<String> items) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 7),
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(vertical: 7),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: Color(0XFFFFE2DF),
+        color: const Color(0XFFFFE2DF),
       ),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(labelText: label, border: InputBorder.none),
@@ -286,10 +288,10 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
 
   Widget buildToiletItem() {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 7),
-      padding: EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(vertical: 7),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Color(0XFFFFD1CD),
+        color: const Color(0XFFFFD1CD),
         borderRadius: BorderRadius.circular(15),
       ),
       child: Column(
@@ -299,7 +301,7 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
             children: [
               Expanded(
                   flex: 2, child: buildDropdown('Type', ['Diaper', 'Potty'])),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Expanded(
                   flex: 2,
                   child: buildDropdown('Dry/Wet/BM', ['Dry', 'Wet', 'BM'])),
@@ -327,18 +329,16 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          child: Text('Shower',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          margin: EdgeInsets.symmetric(horizontal: 10),
-        ),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            child: const Text('Shower',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
         buildTimePicker('Morning', TextEditingController(), context),
         buildTimePicker('Afternoon', TextEditingController(), context),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          child: Text('Vitamin',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          margin: EdgeInsets.symmetric(horizontal: 10),
-        ),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            child: const Text('Vitamin',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
         buildTextField('Vitamin', TextEditingController()),
       ],
     );
@@ -359,15 +359,13 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          child: Text('Item I Need',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          margin: EdgeInsets.symmetric(horizontal: 10),
-        ),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            child: const Text('Item I Need',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
         buildMultiChoiceItems(),
         Container(
-          child: buildTextField('Other', otherItemController),
-          margin: EdgeInsets.symmetric(horizontal: 10),
-        ),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            child: buildTextField('Other', otherItemController)),
       ],
     );
   }

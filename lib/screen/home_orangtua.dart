@@ -3,6 +3,8 @@ import 'package:daycare/screen/dailyreport.dart';
 import 'package:daycare/screen/login.dart';
 
 class OrangtuaScreen extends StatefulWidget {
+  const OrangtuaScreen({super.key});
+
   @override
   _OrangtuaScreenState createState() => _OrangtuaScreenState();
 }
@@ -53,7 +55,7 @@ class _OrangtuaScreenState extends State<OrangtuaScreen>
         child: Column(
           children: [
             // Profil Anak
-            Padding(
+            const Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
@@ -71,7 +73,9 @@ class _OrangtuaScreenState extends State<OrangtuaScreen>
                           Text(
                             'Nama Anak',
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           SizedBox(height: 8),
                           Row(
@@ -112,7 +116,7 @@ class _OrangtuaScreenState extends State<OrangtuaScreen>
             TabBar(
               controller: _tabController,
               isScrollable: true,
-              tabs: [
+              tabs: const [
                 Tab(text: 'Meals'),
                 Tab(text: 'Toilet'),
                 Tab(text: 'Rest'),
@@ -133,35 +137,35 @@ class _OrangtuaScreenState extends State<OrangtuaScreen>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CardItem(
-                          imagePath: 'images/breakfast.png',
-                          Title: 'Breakfast',
-                          text1: '-',
-                          text2: 'None',
+                        buildCardItem(
+                          'images/breakfast.png',
+                          'Breakfast',
+                          '-',
+                          'None',
                         ),
-                        CardItem(
-                          imagePath: 'images/snack.png',
-                          Title: 'Snack',
-                          text1: 'Pisang dan susu',
-                          text2: 'Lots',
+                        buildCardItem(
+                          'images/snack.png',
+                          'Snack',
+                          'Pisang dan susu',
+                          'Lots',
                         ),
-                        CardItem(
-                          imagePath: 'images/lunch.png',
-                          Title: 'Lunch',
-                          text1: 'Nasi, bola-bola tahu, dan telur rebus',
-                          text2: 'Some',
+                        buildCardItem(
+                          'images/lunch.png',
+                          'Lunch',
+                          'Nasi, bola-bola tahu, dan telur rebus',
+                          'Some',
                         ),
-                        CardItem(
-                          imagePath: 'images/dinner.png',
-                          Title: 'Dinner',
-                          text1: 'Nasi dan pempek',
-                          text2: 'Lots',
+                        buildCardItem(
+                          'images/dinner.png',
+                          'Dinner',
+                          'Nasi dan pempek',
+                          'Lots',
                         ),
-                        CardItem(
-                          imagePath: 'images/drink.png',
-                          Title: 'Fluids',
-                          text1: 'Air putih dan susu',
-                          text2: 'Lots',
+                        buildCardItem(
+                          'images/drink.png',
+                          'Fluids',
+                          'Air putih dan susu',
+                          'Lots',
                         ),
                       ],
                     ),
@@ -172,17 +176,17 @@ class _OrangtuaScreenState extends State<OrangtuaScreen>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CardItem(
-                          imagePath: 'images/diaper.png',
-                          Title: 'Diaper',
-                          text1: 'pukul 11.37',
-                          text2: 'Wet',
+                        buildCardItem(
+                          'images/diaper.png',
+                          'Diaper',
+                          'pukul 11.37',
+                          'Wet',
                         ),
-                        CardItem(
-                          imagePath: 'images/diaper.png',
-                          Title: 'Diaper',
-                          text1: 'pukul 14.08',
-                          text2: 'Wet',
+                        buildCardItem(
+                          'images/diaper.png',
+                          'Diaper',
+                          'pukul 14.08',
+                          'Wet',
                         ),
                       ],
                     ),
@@ -193,11 +197,11 @@ class _OrangtuaScreenState extends State<OrangtuaScreen>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CardItem(
-                          imagePath: 'images/sleep.png',
-                          Title: 'Rest',
-                          text1: 'start : 12.59',
-                          text2: 'end   : 13.57',
+                        buildCardItem(
+                          'images/sleep.png',
+                          'Rest',
+                          'start : 12.59',
+                          'end   : 13.57',
                         ),
                       ],
                     ),
@@ -208,17 +212,17 @@ class _OrangtuaScreenState extends State<OrangtuaScreen>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CardItem(
-                          imagePath: 'images/milk.png',
-                          Title: 'Milk',
-                          text1: 'pukul 09.48',
-                          text2: '1 kotak',
+                        buildCardItem(
+                          'images/milk.png',
+                          'Milk',
+                          'pukul 09.48',
+                          '1 kotak',
                         ),
-                        CardItem(
-                          imagePath: 'images/milk.png',
-                          Title: 'Milk',
-                          text1: 'pukul 12.08',
-                          text2: '1 kotak',
+                        buildCardItem(
+                          'images/milk.png',
+                          'Milk',
+                          'pukul 12.08',
+                          '1 kotak',
                         ),
                       ],
                     ),
@@ -229,42 +233,26 @@ class _OrangtuaScreenState extends State<OrangtuaScreen>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          child: Text(
-                            'Shower',
-                            style: TextStyle(
-                                fontSize: 23, fontWeight: FontWeight.bold),
-                          ),
-                          margin: EdgeInsets.symmetric(horizontal: 10),
+                        buildSectionTitle('Shower'),
+                        buildCardItem(
+                          'images/sky.png',
+                          'Morning',
+                          'start : -',
+                          '',
                         ),
-                        CardItem(
-                          imagePath: 'images/sky.png',
-                          Title: 'Morning',
-                          text1: 'start : -',
-                          text2: ' ',
+                        buildCardItem(
+                          'images/day.png',
+                          'Afternoon',
+                          'start : 12.08',
+                          '',
                         ),
-                        CardItem(
-                          imagePath: 'images/day.png',
-                          Title: 'Afternoon',
-                          text1: 'start : 12.08',
-                          text2: ' ',
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          child: Text(
-                            'Vitamin',
-                            style: TextStyle(
-                                fontSize: 23, fontWeight: FontWeight.bold),
-                          ),
-                          margin: EdgeInsets.symmetric(horizontal: 10),
-                        ),
-                        CardItem(
-                          imagePath: 'images/vitamin.png',
-                          Title: 'Vitamin',
-                          text1: 'start : 12.08',
-                          text2: ' ',
+                        SizedBox(height: 10),
+                        buildSectionTitle('Vitamin'),
+                        buildCardItem(
+                          'images/vitamin.png',
+                          'Vitamin',
+                          'start : 12.08',
+                          '',
                         ),
                       ],
                     ),
@@ -275,15 +263,8 @@ class _OrangtuaScreenState extends State<OrangtuaScreen>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          child: Text(
-                            'Items I Need',
-                            style: TextStyle(
-                                fontSize: 23, fontWeight: FontWeight.bold),
-                          ),
-                          margin: EdgeInsets.symmetric(horizontal: 10),
-                        ),
-                        CheckBoxList(),
+                        buildSectionTitle('Items I Need'),
+                        buildCheckBoxList(),
                       ],
                     ),
                   ),
@@ -295,26 +276,12 @@ class _OrangtuaScreenState extends State<OrangtuaScreen>
       ),
     );
   }
-}
 
-class CardItem extends StatelessWidget {
-  final String imagePath;
-  final String Title;
-  final String text1;
-  final String text2;
-
-  const CardItem({
-    required this.imagePath,
-    required this.Title,
-    required this.text1,
-    required this.text2,
-  });
-
-  @override
-  Widget build(BuildContext context) {
+  Widget buildCardItem(
+      String imagePath, String title, String text1, String text2) {
     return Container(
-      padding: EdgeInsets.all(16.0),
-      margin: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+      padding: const EdgeInsets.all(16.0),
+      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
       decoration: BoxDecoration(
         color: Colors.grey.shade200,
         borderRadius: BorderRadius.circular(15),
@@ -326,16 +293,17 @@ class CardItem extends StatelessWidget {
             radius: 40,
             backgroundImage: AssetImage(imagePath),
           ),
-          SizedBox(width: 25),
+          const SizedBox(width: 25),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  Title,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  title,
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Text(
                   text1,
                   maxLines: null,
@@ -343,7 +311,7 @@ class CardItem extends StatelessWidget {
                 ),
                 Text(
                   text2,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Color(0XFF2C55A4),
                   ),
@@ -355,37 +323,34 @@ class CardItem extends StatelessWidget {
       ),
     );
   }
-}
 
-class CheckBoxList extends StatefulWidget {
-  @override
-  _CheckBoxListState createState() => _CheckBoxListState();
-}
+  Widget buildSectionTitle(String title) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: Text(
+        title,
+        style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
 
-class _CheckBoxListState extends State<CheckBoxList> {
-  List<String> items = [
-    'Diapers',
-    'Hand Towel',
-    'Cream',
-    'Clothes',
-    'Towel',
-    'Soap & Shampoo',
-    'Milk',
-    'Toothpaste'
-  ];
+  Widget buildCheckBoxList() {
+    List<String> items = [
+      'Diapers',
+      'Hand Towel',
+      'Cream',
+      'Clothes',
+      'Towel',
+      'Soap & Shampoo',
+      'Milk',
+      'Toothpaste',
+    ];
 
-  Map<String, bool> checkedItems = {};
-
-  @override
-  void initState() {
-    super.initState();
+    Map<String, bool> checkedItems = {};
     for (var item in items) {
       checkedItems[item] = false;
     }
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return Column(
       children: items.map((item) {
         return CheckboxListTile(

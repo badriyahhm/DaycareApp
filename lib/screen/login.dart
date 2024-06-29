@@ -6,6 +6,8 @@ import 'register.dart';
 import 'package:daycare/models/datapengasuh.dart';
 
 class LoginScreen extends StatelessWidget {
+  LoginScreen({super.key});
+
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -22,17 +24,17 @@ class LoginScreen extends StatelessWidget {
       if (user['kode'] == 1) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => ListAnakScreen()),
+          MaterialPageRoute(builder: (context) => const ListAnakScreen()),
         );
       } else if (user['kode'] == 2) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => OrangtuaScreen()),
+          MaterialPageRoute(builder: (context) => const OrangtuaScreen()),
         );
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login failed')),
+        const SnackBar(content: Text('Login failed')),
       );
     }
   }
@@ -41,8 +43,8 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cita Harmoni'),
-        titleTextStyle: TextStyle(
+        title: const Text('Cita Harmoni'),
+        titleTextStyle: const TextStyle(
             color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
         centerTitle: true,
         backgroundColor: const Color(0XFF909FF9),
@@ -52,45 +54,44 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              child: Image.asset('images/shapes.png'),
-              margin: EdgeInsets.only(top: 40),
-            ),
+                margin: const EdgeInsets.only(top: 40),
+                child: Image.asset('images/shapes.png')),
             Container(
-              child: Text(
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              child: const Text(
                 'Welcome Back!',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
               ),
-              margin: EdgeInsets.symmetric(vertical: 10),
             ),
             Container(
+              margin: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 10,
+              ),
               child: TextField(
                 controller: usernameController,
-                decoration: InputDecoration(labelText: 'Username'),
-              ),
-              margin: EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
+                decoration: const InputDecoration(labelText: 'Username'),
               ),
             ),
             Container(
+              margin: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 10,
+              ),
               child: TextField(
                 controller: passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
+                decoration: const InputDecoration(labelText: 'Password'),
                 obscureText: true,
-              ),
-              margin: EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(20, 30, 20, 15),
+              margin: const EdgeInsets.fromLTRB(20, 30, 20, 15),
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () => login(context),
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0XFFFC7275)),
-                child: Text(
+                    backgroundColor: const Color(0XFFFC7275)),
+                child: const Text(
                   'Login',
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
@@ -99,7 +100,7 @@ class LoginScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Belum memiliki akun? '),
+                const Text('Belum memiliki akun? '),
                 TextButton(
                   onPressed: () {
                     Navigator.push(
@@ -107,7 +108,7 @@ class LoginScreen extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => RegisterScreen()),
                     );
                   },
-                  child: Text(
+                  child: const Text(
                     'Register',
                     style: TextStyle(color: Color(0XFF2C55A4)),
                   ),

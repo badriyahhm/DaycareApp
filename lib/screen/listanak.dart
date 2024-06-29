@@ -4,18 +4,20 @@ import 'package:daycare/screen/detail_anak.dart';
 import 'package:daycare/screen/login.dart';
 
 class ListAnakScreen extends StatelessWidget {
+  const ListAnakScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Cita Harmoni',
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
-        backgroundColor: Color(0XFF909FF9),
+        backgroundColor: const Color(0XFF909FF9),
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
             onPressed: () {
               Navigator.pushReplacement(
                 context,
@@ -37,18 +39,20 @@ class ListAnakScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final child = childrenData[index];
                 Color backgroundColor = child.gender == 'Female'
-                    ? Color(0XFFFFE2DF)
-                    : Color(0XFFE2E6FF);
+                    ? const Color(0XFFFFE2DF)
+                    : const Color(0XFFE2E6FF);
                 return Container(
-                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                   decoration: BoxDecoration(
                     color: backgroundColor,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: ListTile(
                     title: Text(child.namaAnak,
-                        style: TextStyle(fontWeight: FontWeight.bold)),
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
                     subtitle: Text('Parent: ${child.parentName}'),
                     onTap: () {
                       Navigator.push(

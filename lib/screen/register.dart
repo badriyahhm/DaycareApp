@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:intl/intl.dart';
+import 'package:daycare/models/api_service.dart';
+import 'package:daycare/screen/childdatascreen.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -10,25 +10,62 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController fullNameController = TextEditingController();
-  final TextEditingController dobController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   final TextEditingController parentNamesController = TextEditingController();
   final TextEditingController contactNumberController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-  DateTime? selectedDate;
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
+  final _formKey = GlobalKey<FormState>();
+  String _selectedRole = 'Parent';
+  bool _isLoading = false;
+
+  void _navigateToNextScreen(BuildContext context, String userId) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChildDataScreen(userId: userId),
+      ),
     );
-    if (picked != null && picked != selectedDate)
+  }
+
+  Future<void> _submitData() async {
+    if (_formKey.currentState!.validate()) {
       setState(() {
-        selectedDate = picked;
-        dobController.text = DateFormat('yyyy-MM-dd').format(selectedDate!);
+        _isLoading = true;
       });
+
+      final data = {
+        'username': usernameController.text,
+        'password': passwordController.text,
+        'parent_names': parentNamesController.text,
+        'contact_number': contactNumberController.text,
+        'email': emailController.text,
+        'role': _selectedRole,
+      };
+
+      try {
+        final responseMessage = await ApiService().postData(data);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(responseMessage)),
+        );
+        _formKey.currentState!.reset();
+
+        if (_selectedRole == 'Parent') {
+          // Mendapatkan userId dari respons API
+          final userId = '123';
+          _navigateToNextScreen(context, userId);
+        }
+      } catch (error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: $error')),
+        );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   @override
@@ -45,87 +82,116 @@ class _RegisterScreenState extends State<RegisterScreen> {
               'images/create.png',
               fit: BoxFit.fitWidth,
             ),
-            Container(
-              child: TextField(
-                controller: usernameController,
-                decoration: InputDecoration(labelText: 'Username'),
-              ),
-              margin: EdgeInsets.symmetric(vertical: 7, horizontal: 30),
-            ),
-            Container(
-              child: TextField(
-                controller: fullNameController,
-                decoration: InputDecoration(labelText: 'Kids Full Name'),
-              ),
-              margin: EdgeInsets.symmetric(vertical: 7, horizontal: 30),
-            ),
-            Container(
-              child: GestureDetector(
-                onTap: () => _selectDate(context),
-                child: AbsorbPointer(
-                  child: TextField(
-                    controller: dobController,
-                    decoration: InputDecoration(labelText: 'Date of Birth'),
-                  ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 30),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: usernameController,
+                      decoration: const InputDecoration(labelText: 'Username'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Username harus diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: parentNamesController,
+                      decoration: const InputDecoration(
+                          labelText: 'Parent/Guardian Names'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Parent/Guardian Names harus diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: contactNumberController,
+                      decoration:
+                          const InputDecoration(labelText: 'Contact Numbers'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Contact Numbers harus diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: emailController,
+                      decoration:
+                          const InputDecoration(labelText: 'Email Address'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Email harus diisi';
+                        }
+                        if (!value.contains('@')) {
+                          return 'Email tidak valid';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: passwordController,
+                      decoration: const InputDecoration(labelText: 'Password'),
+                      obscureText: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Password harus diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: confirmPasswordController,
+                      decoration:
+                          const InputDecoration(labelText: 'Confirm Password'),
+                      obscureText: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Confirm Password harus diisi';
+                        }
+                        if (value != passwordController.text) {
+                          return 'Password tidak sama';
+                        }
+                        return null;
+                      },
+                    ),
+                    DropdownButtonFormField<String>(
+                      decoration: const InputDecoration(labelText: 'Role'),
+                      value: _selectedRole,
+                      items:
+                          <String>['Parent', 'Caregiver'].map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String? value) {
+                        setState(() {
+                          _selectedRole = value!;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 16.0),
+                    ElevatedButton(
+                      onPressed: _isLoading ? null : _submitData,
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0XFFFC7275)),
+                      child: _isLoading
+                          ? const CircularProgressIndicator()
+                          : const Text(
+                              'Next',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                    ),
+                  ],
                 ),
               ),
-              margin: EdgeInsets.symmetric(vertical: 7, horizontal: 30),
-            ),
-            Container(
-              child: DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'Gender'),
-                value: 'Male',
-                items: <String>['Male', 'Female'].map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? value) {},
-              ),
-              margin: EdgeInsets.symmetric(vertical: 7, horizontal: 30),
-            ),
-            Container(
-              child: TextField(
-                controller: parentNamesController,
-                decoration: InputDecoration(labelText: 'Parent/Guardian Names'),
-              ),
-              margin: EdgeInsets.symmetric(vertical: 7, horizontal: 30),
-            ),
-            Container(
-              child: TextField(
-                controller: contactNumberController,
-                decoration: InputDecoration(labelText: 'Contact Numbers'),
-              ),
-              margin: EdgeInsets.symmetric(vertical: 7, horizontal: 30),
-            ),
-            Container(
-              child: TextField(
-                controller: emailController,
-                decoration: InputDecoration(labelText: 'Email Address'),
-              ),
-              margin: EdgeInsets.symmetric(vertical: 7, horizontal: 30),
-            ),
-            Container(
-              child: TextField(
-                controller: passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
-                obscureText: true,
-              ),
-              margin: EdgeInsets.symmetric(vertical: 7, horizontal: 30),
-            ),
-            Container(
-              child: ElevatedButton(
-                onPressed: () => {},
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0XFFFC7275)),
-                child: Text(
-                  'Register',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
-                ),
-              ),
-              margin: EdgeInsets.fromLTRB(30, 15, 30, 30),
-              width: double.infinity,
             ),
           ],
         ),
