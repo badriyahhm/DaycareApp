@@ -55,7 +55,6 @@ class DatabaseHelper {
     ''');
   }
 
-  // Fungsi untuk mendapatkan semua daily reports berdasarkan child_id
   Future<List<Map<String, dynamic>>> getDailyReports(int childId) async {
     final dbClient = await db;
     return await dbClient.query(
@@ -66,7 +65,6 @@ class DatabaseHelper {
     );
   }
 
-  // Fungsi untuk mendapatkan daily report berdasarkan ID
   Future<Map<String, dynamic>?> getDailyReportById(int id) async {
     final dbClient = await db;
     final List<Map<String, dynamic>> results = await dbClient.query(
@@ -81,13 +79,11 @@ class DatabaseHelper {
     return null;
   }
 
-  // Fungsi untuk menambah daily report
   Future<int> insertDailyReport(Map<String, dynamic> report) async {
     final dbClient = await db;
     return await dbClient.insert('daily_reports', report);
   }
 
-  // Fungsi untuk memperbarui daily report
   Future<int> updateDailyReport(Map<String, dynamic> report) async {
     final dbClient = await db;
     return await dbClient.update(
@@ -98,7 +94,6 @@ class DatabaseHelper {
     );
   }
 
-  // Fungsi untuk menghapus daily report
   Future<int> deleteDailyReport(int id) async {
     final dbClient = await db;
     return await dbClient.delete(
