@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:daycare/screen/login.dart';
 import 'package:daycare/models/dataanak.dart';
+import 'package:daycare/models/database_helper.dart';
 
 class DailyReportScreen extends StatefulWidget {
   final DataAnak dataAnak;
+  final int? reportId;
 
-  const DailyReportScreen({required this.dataAnak, super.key});
+  const DailyReportScreen({required this.dataAnak, this.reportId, super.key});
 
   @override
   _DailyReportScreenState createState() => _DailyReportScreenState();
 }
 
 class _DailyReportScreenState extends State<DailyReportScreen> {
-  final TextEditingController nameController = TextEditingController();
   final TextEditingController dateController = TextEditingController();
   final TextEditingController arrivalController = TextEditingController();
   final TextEditingController bodyTemperatureController =
@@ -21,8 +22,21 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
   final TextEditingController conditionsController = TextEditingController();
   final TextEditingController otherItemController = TextEditingController();
 
+  Map<String, bool> checkboxValues = {
+    'Diapers': false,
+    'Hand Towel': false,
+    'Cream': false,
+    'Clothes': false,
+    'Towel': false,
+    'Soap & Shampoo': false,
+    'Milk': false,
+    'Toothpaste': false,
+  };
+
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
+
+  final DatabaseHelper _dbHelper = DatabaseHelper.instance;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -53,11 +67,43 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
     }
   }
 
-  void logout(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => LoginScreen()),
-    );
+  void _saveDailyReport() async {
+    if (_validateInputs()) {
+      try {
+        final dailyReport = {
+          'child_id': widget.dataAnak.id,
+          'date': dateController.text,
+          'arrival': arrivalController.text,
+          'body_temperature': bodyTemperatureController.text,
+          'conditions': conditionsController.text,
+          'other_item': otherItemController.text,
+          'anak_id': widget.dataAnak.id
+        };
+
+        await _dbHelper.insertDailyReport(dailyReport);
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Daily report submitted successfully')),
+        );
+        Navigator.pop(context);
+      } catch (e) {
+        print('Error saving daily report: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to save daily report')),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill in all required fields')),
+      );
+    }
+  }
+
+  bool _validateInputs() {
+    return dateController.text.isNotEmpty &&
+        arrivalController.text.isNotEmpty &&
+        bodyTemperatureController.text.isNotEmpty &&
+        conditionsController.text.isNotEmpty;
   }
 
   @override
@@ -88,7 +134,6 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
               'images/mascots.png',
               fit: BoxFit.fitWidth,
             ),
-            buildTextField('Name', nameController),
             buildDatePicker('Date', dateController, context),
             buildTimePicker('Arrival', arrivalController, context),
             buildTextField('Body Temperature', bodyTemperatureController),
@@ -116,12 +161,7 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
               margin: const EdgeInsets.symmetric(horizontal: 10),
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content: Text('Daily report submitted successfully')),
-                  );
-                },
+                onPressed: _saveDailyReport,
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0XFFFC7275)),
                 child: const Text(
@@ -296,15 +336,19 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
       ),
       child: Column(
         children: [
-          buildTimePicker('Time', TextEditingController(), context),
+          buildTimePicker(
+              'Time', TextEditingController(), context), // Perlu disesuaikan
           Row(
             children: [
               Expanded(
-                  flex: 2, child: buildDropdown('Type', ['Diaper', 'Potty'])),
+                flex: 2,
+                child: buildDropdown('Type', ['Diaper', 'Potty']),
+              ),
               const SizedBox(width: 10),
               Expanded(
-                  flex: 2,
-                  child: buildDropdown('Dry/Wet/BM', ['Dry', 'Wet', 'BM'])),
+                flex: 2,
+                child: buildDropdown('Dry/Wet/BM', ['Dry', 'Wet', 'BM']),
+              ),
             ],
           ),
           buildTextField('Notes', TextEditingController()),
@@ -317,7 +361,8 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildTimePicker('Time', TextEditingController(), context),
+        buildTimePicker(
+            'Time', TextEditingController(), context), // Perlu disesuaikan
         buildTextField('Ml', TextEditingController()),
         buildDropdown('Bottle Type', ['Breast', 'Formula', 'Milk']),
       ],
@@ -388,8 +433,19 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
   Widget buildCheckboxListTile(String title) {
     return CheckboxListTile(
       title: Text(title),
-      value: false,
-      onChanged: (bool? value) {},
+      value: checkboxValues[title],
+      onChanged: (bool? value) {
+        setState(() {
+          checkboxValues[title] = value!;
+        });
+      },
+    );
+  }
+
+  void logout(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginScreen()),
     );
   }
 }
