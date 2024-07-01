@@ -9,15 +9,13 @@ Aplikasi Daycare adalah aplikasi mobile yang dibangun menggunakan Flutter untuk 
 
 
 - **Halaman Registrasi**: Fitur untuk pengguna baru mendaftar ke dalam aplikasi.
-
-![Register Page](images/ss_register.png)
+<img src="images/ss_register.png" alt="Register Page" style="width:400px;">
 
 - **Dashboard Orangtua**: Menampilkan informasi tentang anak-anak, laporan harian, dan detail aktivitas.
-
-![Dashboard orangtua](images/ss_dashboard_ortu.png)
+<img src="images/ss_dashboard_ortu.png" alt="Dashboard Orangtua" style="width:400px;">
 
 - **Dashboard Pengasuh**: Memungkinkan pengasuh untuk mengelola data anak, mencatat aktivitas harian, dan mengirim laporan.
-![Dashboard pengasuh](images\ss_dashboard_pengasuh.png)
+<img src="images/ss_dashboard_pengasuh.png" alt="Dashboard Pengasuh" style="width:400px;">
 
 - **Detail Anak**: Halaman yang menampilkan informasi rinci tentang setiap anak yang terdaftar.
 
@@ -34,8 +32,8 @@ Tonton video melalui goole drive:
 
 
 - **Form Daily Report**: Memungkinkan pengasuh untuk membuat dan mengirimkan laporan harian tentang aktivitas anak.
-![Form Daily Report](images\ss_form.png)
 
+<img src="images/ss_form.png" alt="From Page" style="width:400px;">
 
 ## Instalasi
 
