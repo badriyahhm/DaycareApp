@@ -19,9 +19,10 @@ Aplikasi Daycare adalah aplikasi mobile yang dibangun menggunakan Flutter untuk 
 
 - **Detail Anak**: Halaman yang menampilkan informasi rinci tentang setiap anak yang terdaftar.
 
-| Form belum terisi  | Form terisi |Form sudah ada  |
-|---------------------------|---------------------------|---------------------------|
-| ![Foto 1](images\ss_detailanak_noform.png) | ![Foto 2](images\ss_detailanak_forminserted.png) | ![Foto 3](images\ss_detailanak_withform.png) |
+| Form belum terisi          | Form terisi                 | Form sudah ada              |
+|----------------------------|-----------------------------|-----------------------------|
+| <img src="images/ss_detailanak_noform.png" alt="Foto 1" width="300"> | <img src="images/ss_detailanak_forminserted.png" alt="Foto 2" width="300"> | <img src="images/ss_detailanak_withform.png" alt="Foto 3" width="300"> |
+
 
 Demo input form
 [Klik untuk menonton video demo](images/demo_input_form.mp4)
