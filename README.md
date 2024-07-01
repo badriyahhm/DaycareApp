@@ -5,7 +5,8 @@ Aplikasi Daycare adalah aplikasi mobile yang dibangun menggunakan Flutter untuk 
 ## Fitur Utama
 
 - **Halaman Login**: Pengguna dapat masuk ke aplikasi dengan akun mereka sesuai role mereka (pengasuh atau orangtua).
-![Login Page](images/ss_login.png)
+<img src="images/ss_login.png" alt="Login Page" style="width:400px;">
+
 
 - **Halaman Registrasi**: Fitur untuk pengguna baru mendaftar ke dalam aplikasi.
 
