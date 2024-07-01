@@ -24,6 +24,13 @@ Aplikasi Daycare adalah aplikasi mobile yang dibangun menggunakan Flutter untuk 
 |---------------------------|---------------------------|---------------------------|
 | ![Foto 1](images\ss_detailanak_noform.png) | ![Foto 2](images\ss_detailanak_forminserted.png) | ![Foto 3](images\ss_detailanak_withform.png) |
 
+Demo input form
+[Klik untuk menonton video demo](images/demo_input_form.mp4)
+
+Tonton video melalui goole drive:
+[Link Google Drive](https://drive.google.com/file/d/1Z8UqsL3Dve3A0euiUxHDaUxtQV77QNuO/view?usp=sharing)
+
+
 
 - **Form Daily Report**: Memungkinkan pengasuh untuk membuat dan mengirimkan laporan harian tentang aktivitas anak.
 ![Form Daily Report](images\ss_form.png)
