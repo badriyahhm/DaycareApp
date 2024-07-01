@@ -1,11 +1,29 @@
 import 'package:daycare/screen/listanak.dart';
 import 'package:flutter/material.dart';
-import 'screen/login.dart';
+import 'package:daycare/screen/login.dart';
 import 'package:daycare/screen/home_orangtua.dart';
 import 'package:daycare/screen/dailyreport.dart';
-import 'models/datapengasuh.dart';
+import 'package:daycare/models/datapengasuh.dart';
+import 'package:daycare/models/database_helper.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
-void main() {
+Future<void> resetDatabase() async {
+  String path = join(await getDatabasesPath(), 'daycare.db');
+  await deleteDatabase(path);
+  print('Database deleted. Re-initializing...');
+  final dbHelper = DatabaseHelper();
+  await dbHelper.verifyTableStructure();
+}
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await resetDatabase();
+
+  final dbHelper = DatabaseHelper();
+  await dbHelper.verifyTableStructure();
+
   runApp(MyApp());
 }
 

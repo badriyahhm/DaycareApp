@@ -77,7 +77,6 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
           'body_temperature': bodyTemperatureController.text,
           'conditions': conditionsController.text,
           'other_item': otherItemController.text,
-          'anak_id': widget.dataAnak.id
         };
 
         await _dbHelper.insertDailyReport(dailyReport);

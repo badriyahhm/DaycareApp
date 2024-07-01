@@ -61,14 +61,14 @@ class _DetailAnakScreenState extends State<DetailAnakScreen> {
                   _buildDetailItem(
                       'Kontak Orang Tua', widget.dataAnak.parentContact),
                   const SizedBox(height: 20),
-                  const Divider(), // Garis pemisah
+                  const Divider(),
                   const SizedBox(height: 10),
                   _buildDailyReportList(),
                 ],
               ),
             ),
           ),
-          _buildButton(context), // Button tetap berada di bawah halaman
+          _buildButton(context),
         ],
       ),
     );

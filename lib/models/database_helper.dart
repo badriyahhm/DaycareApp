@@ -25,8 +25,9 @@ class DatabaseHelper {
     String path = join(await getDatabasesPath(), 'daycare.db');
     return await openDatabase(
       path,
-      version: 1,
+      version: 2, // Pastikan versi terbaru
       onCreate: _onCreate,
+      onUpgrade: _onUpgrade,
     );
   }
 
@@ -53,6 +54,19 @@ class DatabaseHelper {
         FOREIGN KEY (child_id) REFERENCES children (id) ON DELETE CASCADE
       )
     ''');
+  }
+
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      await db.execute('ALTER TABLE daily_reports ADD COLUMN arrival TEXT');
+    }
+  }
+
+  Future<void> verifyTableStructure() async {
+    final dbClient = await db;
+    List<Map<String, dynamic>> columns =
+        await dbClient.rawQuery('PRAGMA table_info(daily_reports)');
+    print(columns); // Cek kolom yang ada dalam tabel
   }
 
   Future<List<Map<String, dynamic>>> getDailyReports(int childId) async {
